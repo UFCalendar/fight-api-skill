@@ -59,13 +59,6 @@ Parameters:
   - `idOrSlug` (path, required) — Numeric id or slug of the event. Stale slugs 308-redirect to the canonical URL.
   - `include` (query) — one of `eta`, `odds`
 
-### GET /v1/events/{idOrSlug}/live
-Live snapshot (Pro+)
-The latest real-time document for an event on fight night — the same LiveState the WebSocket pushes: card order and statuses, the bout in progress (current: phase, round, running clock, unofficial totals and per-round stats, referee, a timestamped action timeline), and the last result.
-
-Parameters:
-  - `idOrSlug` (path, required) — Numeric id or slug of the event. Stale slugs 308-redirect to the canonical URL.
-
 ### GET /v1/events/{idOrSlug}/changes
 Card-change log
 The diff log behind "card updated": fight added/removed, opponent swapped, card order or date moved, or a fighter profile merged (fighter-merged: two of our fighter ids turned out to be one athlete, so a live bout now carries the surviving id — same humans, new ids).

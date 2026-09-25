@@ -51,9 +51,9 @@ sign in. Every read tool is annotated read-only and closed-world.
 
 ## Tools
 
-49 tools. Three are free and need no credential (`get_plans`, `list_orgs`,
+48 tools. Three are free and need no credential (`get_plans`, `list_orgs`,
 `how_to_connect`); the rest map onto the REST API (see `endpoints.md` for
-what each returns). The four webhook tools, `get_event_live` and
+what each returns). The four webhook tools and
 `get_odds_history` need Pro or above. Three of them write (`create_webhook_endpoint`, `rotate_webhook_secret`,
 `delete_webhook_endpoint`) and are annotated accordingly — rotate and delete as
 destructive; ask before calling them. `list_webhook_endpoints` is read-only.

@@ -34,7 +34,7 @@ cursor, and never page past what you need.
 
 ## Tier gates
 
-- Webhook endpoints, the live snapshot (`GET /v1/events/{id}/live`) and odds
+- Webhook endpoints and odds
   history (`GET /v1/fights/{id}/odds/history`) need **Pro or above**.
 - Bulk snapshots, including the `odds-closing.json.gz` closing-line archive,
   are **Enterprise only** (contract required — api@ufcalendar.com).

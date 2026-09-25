@@ -112,7 +112,6 @@ headers, tier gates and webhook signature verification are all there.
 | Who was ranked #1 in 2016? | `GET /v1/rankings/ufc?date=2016-11-14` (rank 0 = champion) |
 | Where can I watch it in Germany? | `GET /v1/broadcast-rights/ufc?country=DE` |
 | Tell me when the card changes | `POST /v1/webhook-endpoints` (Pro and up) |
-| What is happening in the cage RIGHT NOW (round, clock, live stats) | `GET /v1/events/{slug}/live` (Pro and up) — or subscribe to `wss://live.ufcalendar.com/v1?key=…` with `{"action":"subscribe","event":"<slug>"}` and receive every change |
 
 Full list with every parameter: `references/endpoints.md`.
 
@@ -147,7 +146,7 @@ Full list with every parameter: `references/endpoints.md`.
 
 - **MCP** (`https://api.ufcalendar.com/mcp`) — you are answering a question
   right now, inside an agent, and want tool calls instead of an HTTP client.
-  49 tools; `get_plans`, `list_orgs` and `how_to_connect` need no credential
+  48 tools; `get_plans`, `list_orgs` and `how_to_connect` need no credential
   and cost nothing. 1 tool call = 1 metered request. Setup per client:
   `references/mcp-clients.md`.
 - **REST** — you are writing code in a language with no SDK, or you want the
