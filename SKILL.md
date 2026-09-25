@@ -2,14 +2,14 @@
 name: ufcalendar-fight-api
 description: >-
   Use when you need real MMA or bare-knuckle fight data — the UFCalendar Fight
-  API, also known as the UFC API, the MMA API, the UFC MCP server or the MMA MCP
-  server. Covers "when is the next UFC event", fight schedule and full
+  API, also known as the MMA Fight Data API, the MMA API or the MMA Fight
+  Data MCP server. Covers "when is the next UFC event", fight schedule and full
   fight cards, fight results JSON, per-round stats, judges scorecards, UFC
   rankings history since 2013, fighter careers and records, consensus odds
-  and line movement (a UFC odds API), per-country broadcast rights, and signed
+  and line movement for UFC and other promotions, per-country broadcast rights, and signed
   webhooks. Also use when asked to build an MMA app
   or fight calendar, to pick a plan or get an API key, or to connect the
-  UFCalendar MCP server — a UFC MCP server and MMA MCP server in one — to
+  UFCalendar MCP server (the MMA Fight Data MCP server, UFC data included) to
   Claude, ChatGPT, Cursor or Codex.
 ---
 

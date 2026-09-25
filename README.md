@@ -1,8 +1,8 @@
 # UFCalendar Fight API — agent skill
 
 An installable skill that teaches a coding agent how to reach the
-[UFCalendar Fight API](https://www.ufcalendar.com/developers) — the MMA API and
-UFC API behind our [UFC MCP server](https://www.ufcalendar.com/developers/ufc-mcp-server)
+[UFCalendar Fight API](https://www.ufcalendar.com/developers) — the MMA Fight Data API
+behind our [MCP server for UFC data](https://www.ufcalendar.com/developers/ufc-mcp-server)
 and [MMA MCP server](https://www.ufcalendar.com/developers/mma-mcp-server): UFC, PFL,
 OKTAGON, BKFC and RIZIN events, full fight cards, results, per-round stats,
 fighter careers, judges' scorecards, UFC rankings history since 2013 and
