@@ -481,13 +481,6 @@ Pro and above.
 Parameters:
   - `id` (path, required)
 
-### GET /v1/bulk/{kind}
-Bulk snapshot (Enterprise only)
-Enterprise only — the full dataset is licensed, not self-serve; contact api@ufcalendar.com.
-
-Parameters:
-  - `kind` (path, required) — one of `events.json.gz`, `fights.json.gz`, `fighters.json.gz`, `odds-closing.json.gz`
-
 ### GET /v1/usage
 Your quota usage
 Current-month usage for the calling key: tier, requests used/limit, rpm limit, and the reset as both a Unix timestamp (reset) and ISO-8601 (reset_at); month (YYYYMM) and period (YYYY-MM) are the same month in two spellings.

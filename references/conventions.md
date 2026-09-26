@@ -36,8 +36,6 @@ cursor, and never page past what you need.
 
 - Webhook endpoints and odds
   history (`GET /v1/fights/{id}/odds/history`) need **Pro or above**.
-- Bulk snapshots, including the `odds-closing.json.gz` closing-line archive,
-  are **Enterprise only** (contract required — api@ufcalendar.com).
 - Everything else, ICS feeds included, is open to any active plan.
 - A key below the required tier gets `403 tier_required`.
 
