@@ -107,6 +107,7 @@ headers, tier gates and webhook signature verification are all there.
 | How did that fight go, round by round? | `GET /v1/fights/{id}/rounds` |
 | How did the judges score it? | `GET /v1/fights/{id}/scorecards` |
 | What did the market price this bout at (current, opening, closing)? | `GET /v1/fights/{id}/odds` — or `GET /v1/events/{id\|slug}/odds` for the whole card, `?include=odds` on the event or fight detail |
+| How does the market think it ends (KO/TKO, submission, decision; total rounds; goes the distance)? | `props` on `GET /v1/fights/{id}/odds` (and on every bout of the card's odds) |
 | How did the line move? | `GET /v1/fights/{id}/odds/history` (Pro and up) |
 | Who is this fighter? | `GET /v1/fighters/{id\|slug}` and `…/history` |
 | Who was ranked #1 in 2016? | `GET /v1/rankings/ufc?date=2016-11-14` (rank 0 = champion) |
