@@ -42,8 +42,8 @@ A bare listing is the upcoming calendar: events from the last ~6h onward, soones
 Parameters:
   - `org` (query) — one of `ufc`, `pfl`, `oktagon`, `bkfc`, `rizin`
   - `status` (query) — Filter on lifecycle status; `postponed` is accepted (2026-09-24). `upcoming` = everything not yet over (announced, scheduled or live), soonest first.
-  - `from` (query) — Inclusive `YYYY-MM-DD`; must be a real calendar day.
-  - `to` (query) — Inclusive `YYYY-MM-DD`; must be a real calendar day.
+  - `from` (query) — First UTC calendar day, inclusive `YYYY-MM-DD`, matched against the event's `starts_at` (first bell, UTC) — not the venue's local date. Must be a real calendar day.
+  - `to` (query) — Last UTC calendar day, inclusive `YYYY-MM-DD`, matched against `starts_at` (UTC). An evening card in the Americas starts after midnight UTC, so it falls on the next UTC day: a Saturday-night Las Vegas card needs `to=` the Sunday. Must be a real calendar day.
   - `order` (query) — one of `asc`, `desc`
   - `is_title_card` (query) — `true` = only cards with a title bout, `false` = only cards without one.
   - `is_ppv` (query) — `true` = only pay-per-view cards, `false` = only non-PPV cards.
@@ -108,8 +108,8 @@ Every launch-org event held (or booked) at one venue, newest first — upcoming 
 Parameters:
   - `id` (path, required)
   - `status` (query) — Same values as `/v1/events`; `upcoming` = the venue's cards not yet over.
-  - `from` (query)
-  - `to` (query)
+  - `from` (query) — First UTC calendar day, inclusive `YYYY-MM-DD`, matched against the event's `starts_at` (first bell, UTC) — not the venue's local date. Must be a real calendar day.
+  - `to` (query) — Last UTC calendar day, inclusive `YYYY-MM-DD`, matched against `starts_at` (UTC). An evening card in the Americas starts after midnight UTC, so it falls on the next UTC day: a Saturday-night Las Vegas card needs `to=` the Sunday. Must be a real calendar day.
   - `order` (query) — one of `asc`, `desc`
   - `cursor` (query) — Opaque cursor from `meta.pagination.next_cursor`.
   - `limit` (query)
@@ -170,8 +170,8 @@ Every stored consensus point for one bout, oldest first: the line-movement serie
 
 Parameters:
   - `id` (path, required)
-  - `from` (query) — Earliest recorded day, inclusive `YYYY-MM-DD`.
-  - `to` (query) — Latest recorded day, inclusive `YYYY-MM-DD`; must not precede `from`.
+  - `from` (query) — Earliest recorded day (UTC), inclusive `YYYY-MM-DD`.
+  - `to` (query) — Latest recorded day (UTC), inclusive `YYYY-MM-DD`; must not precede `from`.
   - `cursor` (query) — Opaque cursor from `meta.pagination.next_cursor`.
   - `limit` (query)
 
@@ -188,8 +188,8 @@ Parameters:
   - `division` (query) — Division slug (`lightweight`, `womens-strawweight`, …) for an exact match, or a name fragment (≤40 characters) matched anywhere in the weight class.
   - `fighter` (query) — Fighter slug or id — bouts this fighter was in, either corner.
   - `winner` (query) — Fighter slug or id — bouts this fighter won.
-  - `from` (query) — Earliest event date, YYYY-MM-DD.
-  - `to` (query) — Latest event date, YYYY-MM-DD.
+  - `from` (query) — First UTC calendar day, inclusive `YYYY-MM-DD`, matched against the event's `starts_at` (first bell, UTC) — not the venue's local date. Must be a real calendar day.
+  - `to` (query) — Last UTC calendar day, inclusive `YYYY-MM-DD`, matched against `starts_at` (UTC). An evening card in the Americas starts after midnight UTC, so it falls on the next UTC day: a Saturday-night Las Vegas card needs `to=` the Sunday. Must be a real calendar day.
   - `main_events_only` (query) — `true` = main events only.
   - `order` (query) — one of `newest`, `oldest`
   - `cursor` (query) — Opaque cursor from `meta.pagination.next_cursor`; an unreadable cursor restarts at the first page.
@@ -232,8 +232,8 @@ Completed bouts the judges decided on a split or majority (including majority an
 
 Parameters:
   - `org` (query) — one of `ufc`, `pfl`, `oktagon`, `bkfc`, `rizin`
-  - `from` (query) — Earliest event date, YYYY-MM-DD.
-  - `to` (query) — Latest event date, YYYY-MM-DD.
+  - `from` (query) — First UTC calendar day, inclusive `YYYY-MM-DD`, matched against the event's `starts_at` (first bell, UTC) — not the venue's local date. Must be a real calendar day.
+  - `to` (query) — Last UTC calendar day, inclusive `YYYY-MM-DD`, matched against `starts_at` (UTC). An evening card in the Americas starts after midnight UTC, so it falls on the next UTC day: a Saturday-night Las Vegas card needs `to=` the Sunday. Must be a real calendar day.
   - `cursor` (query) — Opaque cursor from `meta.pagination.next_cursor`.
   - `limit` (query)
 
