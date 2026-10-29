@@ -30,6 +30,9 @@ cursor, and never page past what you need.
 - `X-RateLimit-Limit` / `-Remaining` / `-Reset` describe the **monthly** quota.
 - The per-minute limit is separate and is the real anti-scraping throttle.
 - A 429 carries `Retry-After`. Honour it; do not retry in a tight loop.
+  `error.code` tells the two apart: `rate_limited` (per-minute, `Retry-After`
+  under a minute — wait and retry) vs `quota_exceeded` (the month is spent —
+  stop). The Python and TypeScript SDKs wait out `rate_limited` on GETs for you.
 - Quotas are hard caps with no overage billing: past the cap, calls fail.
 
 ## Tier gates

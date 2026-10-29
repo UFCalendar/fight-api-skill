@@ -3,6 +3,12 @@
 Both clients wrap the same REST API: one method per endpoint, cursor pagination
 handled for you, errors raised with the API's `code`, `message` and request id.
 
+Both also wait out the per-minute limit on reads: a `GET` answered 429
+`rate_limited` with `Retry-After` of 60 s or less sleeps that long (plus a little
+jitter) and retries, up to `max_retries` / `maxRetries` times (default 3, `0`
+disables). The monthly quota (`quota_exceeded`) and non-`GET` requests raise at
+once. Python `ufcalendar` 0.8.4+, TypeScript `@ufcalendar/sdk` 0.8.5+.
+
 ## Python
 
 ```bash
