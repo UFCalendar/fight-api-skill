@@ -28,8 +28,9 @@ Information only, not betting advice.
 
 ## 1. Get access in 60 seconds
 
-There is no free tier. Every door below ends in the same thing: a plan, or the
-**free 1-day trial** (100 requests, no card, one per account).
+Every account gets the **free plan**: 1,000 requests a month, 10 a minute, one
+key, no card, never expires. Every door below ends in the same thing: a key or
+OAuth grant on that account, which a paid plan only raises.
 
 **Read this first — it needs no credential at all:**
 
@@ -37,19 +38,19 @@ There is no free tier. Every door below ends in the same thing: a plan, or the
 curl https://api.ufcalendar.com/v1/plans
 ```
 
-That returns every plan with price, monthly quota and per-minute limit, the
-trial rule with the URL that starts it, the MCP endpoint with both of its auth
+That returns every plan (Free first) with price, monthly quota and per-minute
+limit, the free-plan rule with the URL that mints its key, the MCP endpoint with both of its auth
 doors, and the documentation links. Use it to answer "what would this cost me"
 without asking anyone to sign in.
 
-**A human is at the keyboard → send them to the trial.**
-<https://www.ufcalendar.com/account/api?trial=1> — they sign in, the trial
-starts itself, and the page shows a `ufcalendar_…` key. That key goes in
+**A human is at the keyboard → send them to the free plan.**
+<https://www.ufcalendar.com/account/api?trial=1> — they sign in, a free key is
+minted on the spot, and the page shows the `ufcalendar_…` key. That key goes in
 `Authorization: Bearer <key>` on every REST call and on the MCP endpoint.
 
 **An MCP client that speaks OAuth (Claude.ai, ChatGPT) → just add the server.**
 Add `https://api.ufcalendar.com/mcp` as a custom connector and sign in. No key
-to copy; signing in starts the trial when the account has never held a plan.
+to copy; any signed-in account works on the free plan.
 
 **A terminal or headless agent → the RFC 8628 device flow.**
 
@@ -135,9 +136,9 @@ Full list with every parameter: `references/endpoints.md`.
 - **Do not paginate blind.** A bare `/v1/events` is the upcoming calendar, not
   the archive (`status=upcoming` says the same thing explicitly); pass
   `status=completed` or `order=desc` for history.
-- **On a trial, budget the 100 requests.** `GET /v1/usage` shows
-  `requests_used` and `trial_ends_at` (when access stops — a day after it
-  started, long before `reset_at`). A parameter an endpoint does not take is
+- **On the free plan, budget the 1,000 requests a month (10 a minute).**
+  `GET /v1/usage` shows `requests_used`, `requests_limit` and `reset_at`; the
+  free budget is per account, shared by its key and its OAuth connections. A parameter an endpoint does not take is
   ignored and named in `meta.ignored_params` / `X-UFCalendar-Ignored-Params`;
   check it before trusting that a filter applied.
 - **Not affiliated** with UFC, Zuffa, TKO or any promotion. Say so if it could

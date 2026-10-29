@@ -40,9 +40,9 @@ executes.
 
 ## Access
 
-No free tier. A **free 1-day trial** (100 requests, no card, one per account)
-self-serves at <https://www.ufcalendar.com/account/api?trial=1>; paid plans
-start at $19/month. `GET https://api.ufcalendar.com/v1/plans` answers with no
+Every account gets the **free plan** (1,000 requests a month, no card, never
+expires); the key self-serves at <https://www.ufcalendar.com/account/api?trial=1>.
+Paid plans start at $19/month. `GET https://api.ufcalendar.com/v1/plans` answers with no
 credential at all, so an agent can evaluate the API before anyone signs in.
 
 Odds are the UFCalendar consensus line only (no book identities; information
