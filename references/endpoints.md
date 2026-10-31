@@ -33,6 +33,13 @@ Parameters:
   - `slug` (path, required) — one of `ufc`, `pfl`, `oktagon`, `bkfc`, `rizin`
   - `division` (path, required) — one of `strawweight`, `flyweight`, `bantamweight`, `featherweight`, `lightweight`, `welterweight`, `super-welterweight`, `middleweight`, `light-heavyweight`, `heavyweight`, `super-heavyweight`, `womens-strawweight`, `womens-flyweight`, `womens-bantamweight`, `womens-featherweight`, `atomweight`, `ironweight`
 
+### GET /v1/coverage
+Data coverage per promotion
+What the database actually holds, computed from it (refreshed every 30 minutes) rather than quoted from a marketing page: per launch promotion and per UTC year, the non-cancelled events that have started, the settled bouts (fights_completed: completed or no contest) and how many of them carry per-fight totals (fights_with_stats), round-by-round lines (fights_with_rounds), at least one official commission scorecard (fights_with_scorecards — a finish has no cards, so this tops out at the decision share) and a consensus odds line across the sportsbooks we track (fights_with_odds; information only, not betting advice), each with its 0–1 *_rate.
+
+Parameters:
+  - `org` (query) — one of `ufc`, `pfl`, `oktagon`, `bkfc`, `rizin`
+
 ## Events
 
 ### GET /v1/events
@@ -261,6 +268,34 @@ This judge's card for every launch-org bout they worked, newest first — the bo
 
 Parameters:
   - `id` (path, required)
+  - `cursor` (query) — Opaque cursor from `meta.pagination.next_cursor`.
+  - `limit` (query)
+
+## Referees
+
+### GET /v1/referees
+Referee directory
+Every referee who has worked a settled launch-promotion bout, busiest first, with their career shape: bouts, promotions (by_org), first and last bout, finish_rate (KO/TKO + submission share), the method breakdown (methods: ko_tko, submission, decision, other = draws, no contests, disqualifications) and avg_fight_time_sec (elapsed time over bouts with a readable final round and clock, at the sport's standard round length).
+
+Parameters:
+  - `q` (query) — Name fragment, accent- and spacing-insensitive.
+  - `org` (query) — one of `ufc`, `pfl`, `oktagon`, `bkfc`, `rizin`
+  - `cursor` (query) — Opaque cursor from `meta.pagination.next_cursor`.
+  - `limit` (query)
+
+### GET /v1/referees/{slug}
+One referee
+A single referee's career aggregates by slug (e.g.
+
+Parameters:
+  - `slug` (path, required) — Referee slug from `/v1/referees`.
+
+### GET /v1/referees/{slug}/fights
+Bouts a referee worked
+Every settled launch-promotion bout this referee worked, newest first — the bout (same shape as /v1/fights/{id}) with its event.
+
+Parameters:
+  - `slug` (path, required) — Referee slug from `/v1/referees`.
   - `cursor` (query) — Opaque cursor from `meta.pagination.next_cursor`.
   - `limit` (query)
 

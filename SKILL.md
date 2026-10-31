@@ -107,6 +107,9 @@ headers, tier gates and webhook signature verification are all there.
 | What happened last night? | `GET /v1/events?org=ufc&status=completed` then the detail route |
 | How did that fight go, round by round? | `GET /v1/fights/{id}/rounds` |
 | How did the judges score it? | `GET /v1/fights/{id}/scorecards` |
+| Fantasy points for a bout? | `GET /v1/fights/{id}/stats` — `fantasy` per corner (UFCalendar fantasy points + breakdown); `meta.quality` flags gaps |
+| Who refereed it, and how do their fights end? | `GET /v1/referees/{slug}` (slug of the name, e.g. `herb-dean`) |
+| How complete is the data for a promotion? | `GET /v1/coverage?org=ufc` |
 | What did the market price this bout at (current, opening, closing)? | `GET /v1/fights/{id}/odds` — or `GET /v1/events/{id\|slug}/odds` for the whole card, `?include=odds` on the event or fight detail |
 | How does the market think it ends (KO/TKO, submission, decision; total rounds; goes the distance)? | `props` on `GET /v1/fights/{id}/odds` (and on every bout of the card's odds) |
 | How did the line move? | `GET /v1/fights/{id}/odds/history` (Pro and up) |
@@ -148,7 +151,7 @@ Full list with every parameter: `references/endpoints.md`.
 
 - **MCP** (`https://api.ufcalendar.com/mcp`) — you are answering a question
   right now, inside an agent, and want tool calls instead of an HTTP client.
-  47 tools; `get_plans`, `list_orgs` and `how_to_connect` need no credential
+  52 tools; `get_plans`, `list_orgs` and `how_to_connect` need no credential
   and cost nothing. 1 tool call = 1 metered request. Setup per client:
   `references/mcp-clients.md`.
 - **REST** — you are writing code in a language with no SDK, or you want the
