@@ -28,7 +28,7 @@ Information only, not betting advice.
 
 ## 1. Get access in 60 seconds
 
-Every account gets the **free plan**: 1,000 requests a month, 10 a minute, one
+Every account gets the **free plan**: 100 requests a month, 10 a minute, one
 key, no card, never expires. Every door below ends in the same thing: a key or
 OAuth grant on that account, which a paid plan only raises.
 
@@ -139,7 +139,7 @@ Full list with every parameter: `references/endpoints.md`.
 - **Do not paginate blind.** A bare `/v1/events` is the upcoming calendar, not
   the archive (`status=upcoming` says the same thing explicitly); pass
   `status=completed` or `order=desc` for history.
-- **On the free plan, budget the 1,000 requests a month (10 a minute).**
+- **On the free plan, budget the 100 requests a month (10 a minute).**
   `GET /v1/usage` shows `requests_used`, `requests_limit` and `reset_at`; the
   free budget is per account, shared by its key and its OAuth connections. A parameter an endpoint does not take is
   ignored and named in `meta.ignored_params` / `X-UFCalendar-Ignored-Params`;

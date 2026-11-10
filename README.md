@@ -40,7 +40,7 @@ executes.
 
 ## Access
 
-Every account gets the **free plan** (1,000 requests a month, no card, never
+Every account gets the **free plan** (100 requests a month, no card, never
 expires); the key self-serves at <https://www.ufcalendar.com/account/api?trial=1>.
 Paid plans start at $19/month. `GET https://api.ufcalendar.com/v1/plans` answers with no
 credential at all, so an agent can evaluate the API before anyone signs in.

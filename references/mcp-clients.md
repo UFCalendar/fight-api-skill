@@ -41,7 +41,7 @@ http_headers = { Authorization = "Bearer $UFCALENDAR_API_KEY" }
 
 Settings → Connectors → Add custom connector, paste
 `https://api.ufcalendar.com/mcp`, then sign in with your UFCalendar account.
-No key to copy — every signed-in account works on the free plan (1,000 requests
+No key to copy — every signed-in account works on the free plan (100 requests
 a month, no card).
 
 ## ChatGPT (developer mode)
