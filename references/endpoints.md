@@ -48,7 +48,7 @@ A bare listing is the upcoming calendar: events from the last ~6h onward, soones
 
 Parameters:
   - `org` (query) — one of `ufc`, `pfl`, `oktagon`, `bkfc`, `rizin`
-  - `status` (query) — Filter on lifecycle status; `postponed` is accepted (2026-09-24). `upcoming` = everything not yet over (announced, scheduled or live), soonest first.
+  - `status` (query) — Filter on lifecycle status; `postponed` is accepted (2026-09-24). `upcoming` = everything not yet over (announced, scheduled or live), soonest first. `scheduled` = not started yet (`announced` or `scheduled`; upcoming cards are almost always stored as `announced`).
   - `from` (query) — First UTC calendar day, inclusive `YYYY-MM-DD`, matched against the event's `starts_at` (first bell, UTC) — not the venue's local date. Must be a real calendar day.
   - `to` (query) — Last UTC calendar day, inclusive `YYYY-MM-DD`, matched against `starts_at` (UTC). An evening card in the Americas starts after midnight UTC, so it falls on the next UTC day: a Saturday-night Las Vegas card needs `to=` the Sunday. Must be a real calendar day.
   - `order` (query) — one of `asc`, `desc`
@@ -204,7 +204,7 @@ Parameters:
 
 ### GET /v1/fights/{id}
 One bout
-Bout with corners (FighterRef with country_code), sport (bout override, else the org sport), weight_class + division_slug, result (raw method plus method_normalized / finish_detail / round / time / time_seconds / referee) and bonus flags, plus a compact event.
+Bout with corners (FighterRef with country_code), sport (bout override, else the org sport), weight_class + division_slug, result (raw method plus method_normalized / finish_detail / finish_position / round / time / time_seconds / referee) and bonus flags, plus a compact event.
 
 Parameters:
   - `id` (path, required)
