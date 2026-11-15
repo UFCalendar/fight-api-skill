@@ -113,6 +113,9 @@ headers, tier gates and webhook signature verification are all there.
 | What did the market price this bout at (current, opening, closing)? | `GET /v1/fights/{id}/odds` — or `GET /v1/events/{id\|slug}/odds` for the whole card, `?include=odds` on the event or fight detail |
 | How does the market think it ends (KO/TKO, submission, decision; total rounds; goes the distance)? | `props` on `GET /v1/fights/{id}/odds` (and on every bout of the card's odds) |
 | How did the line move? | `GET /v1/fights/{id}/odds/history` (Pro and up) |
+| What happened inside the fight: takedowns, knockdowns, referee stoppages, fouls? | `GET /v1/fights/{id}/timeline` — the official in-fight log of a settled UFC bout, with every confirmed foul (Pro and up) |
+| Where was the fight fought, and who held control? | `GET /v1/fights/{id}/positions` — time at distance / clinch / ground, control by position, per round (Pro and up) |
+| How often does this fighter commit fouls? Where do their fights happen? | `GET /v1/fighters/{id\|slug}/discipline` and `…/positions` (Pro and up) |
 | Who is this fighter? | `GET /v1/fighters/{id\|slug}` and `…/history` |
 | Who was ranked #1 in 2016? | `GET /v1/rankings/ufc?date=2016-11-14` (rank 0 = champion) |
 | Where can I watch it in Germany? | `GET /v1/broadcast-rights/ufc?country=DE` |
@@ -144,6 +147,19 @@ Full list with every parameter: `references/endpoints.md`.
   free budget is per account, shared by its key and its OAuth connections. A parameter an endpoint does not take is
   ignored and named in `meta.ignored_params` / `X-UFCalendar-Ignored-Params`;
   check it before trusting that a filter applied.
+- **A recorded foul is not a ruling on intent.** The fight log and the
+  discipline record report confirmed fouls in settled UFC bouts only. The log
+  labels just two fouls, the eye poke and the low blow; any other foul (an
+  illegal knee to a grounded opponent, an upkick, a headbutt, a bite, a fence
+  grab) reaches it as a `generic` stoppage naming nobody, so it is reported
+  only when a record confirms it. `basis` / `foul_basis` says which: `log`
+  (the labelled row), `deduction` (the athletic commission took a point) or
+  `result` (the bout ended on it: a disqualification or a "could not
+  continue"). A `generic` stoppage with `is_foul: false` is not a foul; never
+  count it as one. Stoppage reasons start on 8 December 2018; an earlier
+  stoppage is unlabelled, never "no foul". Report the foul, its basis and the
+  stoppage; do not call a fighter dirty on it. In position stats `null` means
+  not tracked for that bout and `0` is a real zero.
 - **Not affiliated** with UFC, Zuffa, TKO or any promotion. Say so if it could
   be misread.
 
@@ -151,7 +167,7 @@ Full list with every parameter: `references/endpoints.md`.
 
 - **MCP** (`https://api.ufcalendar.com/mcp`) — you are answering a question
   right now, inside an agent, and want tool calls instead of an HTTP client.
-  52 tools; `get_plans`, `list_orgs` and `how_to_connect` need no credential
+  56 tools; `get_plans`, `list_orgs` and `how_to_connect` need no credential
   and cost nothing. 1 tool call = 1 metered request. Setup per client:
   `references/mcp-clients.md`.
 - **REST** — you are writing code in a language with no SDK, or you want the
@@ -173,6 +189,9 @@ Full list with every parameter: `references/endpoints.md`.
 | Who should X fight next? Best matchups in a division? | `whos_next` / `get_matchmaker` |
 | What are the odds on this bout / this card? | `get_fight_odds` / `get_event_odds` |
 | How did the line move? | `get_odds_history` (Pro and up) |
+| What happened inside the fight? Any fouls, point deductions or a disqualification? | `get_fight_timeline` (Pro and up) |
+| Where was it fought — distance, clinch or ground — and who had control? | `get_fight_positions` / `get_fighter_positions` (Pro and up) |
+| How often does X foul, or get fouled? | `get_fighter_discipline` (Pro and up) |
 | Has UFCalendar written about it? | `search_articles` |
 
 Rule of thumb: **answering** → MCP. **Building** → SDK, or REST if neither SDK

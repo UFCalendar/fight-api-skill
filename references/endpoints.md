@@ -224,6 +224,20 @@ Per-round stat lines for both corners — each with round (and the stored round_
 Parameters:
   - `id` (path, required)
 
+### GET /v1/fights/{id}/timeline
+In-fight log: actions, stoppages and fouls (Pro+)
+The official in-fight log of one settled UFC bout (Dana White's Contender Series included), from June 2013: every logged action in order, the referee stoppages paired with their reason and real length, and every confirmed foul of the bout.
+
+Parameters:
+  - `id` (path, required)
+
+### GET /v1/fights/{id}/positions
+Position stats: time by range, control by position (Pro+)
+Where one settled UFC bout was fought and who held control, from the official fight statistics (tracked reliably from 2007): totals is one line per fighter for the whole bout (corner a, then b) and rounds carries the same lines for each round.
+
+Parameters:
+  - `id` (path, required)
+
 ## Scorecards
 
 ### GET /v1/fights/{id}/scorecards
@@ -350,6 +364,20 @@ Per-bout rating history from the UFCalendar Power Index engine (rating before/af
 Parameters:
   - `idOrSlug` (path, required) — Numeric id or slug of the fighter. Stale slugs 308-redirect to the canonical URL.
 
+### GET /v1/fighters/{idOrSlug}/discipline
+Discipline: fouls committed and drawn (Pro+)
+The confirmed fouls in a fighter's UFC bouts, both the ones the fighter committed and the ones committed against them (drawn): eye pokes and low blows from the official in-fight log, plus every other foul (an illegal knee to a grounded opponent, an upkick, a headbutt, a bite, a fence grab) that a commission point deduction or the official result confirms.
+
+Parameters:
+  - `idOrSlug` (path, required) — Numeric id or slug of the fighter. Stale slugs 308-redirect to the canonical URL.
+
+### GET /v1/fighters/{idOrSlug}/positions
+Career position profile: time by range, control for and against (Pro+)
+Where a fighter's bouts happen, over their career: the share of cage time at distance, in the clinch and on the ground, and who held control in each position — the fighter (for_sec) against their opponents (against_sec).
+
+Parameters:
+  - `idOrSlug` (path, required) — Numeric id or slug of the fighter. Stale slugs 308-redirect to the canonical URL.
+
 ### GET /v1/compare
 Compare two fighters
 The tale of the tape in one call.
@@ -427,7 +455,7 @@ One board from UFCalendar's Record Book rollup (rebuilt daily) for ONE promotion
 
 Parameters:
   - `org` (query, required) — one of `ufc`, `pfl`, `oktagon`, `bkfc`, `rizin`
-  - `metric` (query, required) — one of `total_fights`, `wins`, `decision_wins`, `title_fight_wins`, `bonuses`, `finishes`, `win_streak`, `total_fight_seconds`, `avg_fight_seconds_short`, `avg_fight_seconds_long`, `control_time_sec`, `control_time_pct`, `sig_strikes_landed`, `total_strikes_landed`, `slpm`, `sapm`, `striking_differential`, `sig_strike_accuracy`, `sig_strike_defense`, `knockdowns`, `knockdowns_per_15`, `knockouts`, `takedowns_landed`, `td_avg`, `takedown_accuracy`, `takedown_defense`, `submission_attempts`, `sub_avg_per_15`, `submissions`, `fastest_finish`, `fastest_knockout`, `fastest_submission`, `longest_fight_seconds`, `most_sig_strikes_fight`, `most_takedowns_fight`, `most_knockdowns_fight`, `longest_control_fight`, `most_sig_strikes_round`, `most_takedowns_round`, `most_knockdowns_round`, `most_finishes_event`, `most_knockouts_event`, `shortest_card_seconds`, `finish_rate`, `ko_rate`, `sub_rate`, `decision_rate`, `avg_fight_seconds`
+  - `metric` (query, required) — one of `total_fights`, `wins`, `decision_wins`, `title_fight_wins`, `bonuses`, `finishes`, `win_streak`, `total_fight_seconds`, `avg_fight_seconds_short`, `avg_fight_seconds_long`, `control_time_sec`, `control_time_pct`, `sig_strikes_landed`, `total_strikes_landed`, `slpm`, `sapm`, `striking_differential`, `sig_strike_accuracy`, `sig_strike_defense`, `knockdowns`, `knockdowns_per_15`, `knockouts`, `takedowns_landed`, `td_avg`, `takedown_accuracy`, `takedown_defense`, `submission_attempts`, `sub_avg_per_15`, `submissions`, `fastest_finish`, `fastest_knockout`, `fastest_submission`, `longest_fight_seconds`, `most_sig_strikes_fight`, `most_takedowns_fight`, `most_knockdowns_fight`, `longest_control_fight`, `most_sig_strikes_round`, `most_takedowns_round`, `most_knockdowns_round`, `fouls_committed`, `eye_pokes_committed`, `low_blows_committed`, `fouls_drawn`, `fouls_per_15`, `most_fouls_fight`, `longest_foul_stoppage_fight`, `most_fouls_event`, `most_finishes_event`, `most_knockouts_event`, `shortest_card_seconds`, `finish_rate`, `ko_rate`, `sub_rate`, `decision_rate`, `avg_fight_seconds`, `fouls_per_15_division`
   - `division` (query) — one of `strawweight`, `flyweight`, `bantamweight`, `featherweight`, `lightweight`, `welterweight`, `super-welterweight`, `middleweight`, `light-heavyweight`, `heavyweight`, `super-heavyweight`, `womens-strawweight`, `womens-flyweight`, `womens-bantamweight`, `womens-featherweight`, `atomweight`, `ironweight`
   - `population` (query) — one of `all`, `active`
   - `country` (query) — ISO-3166 alpha-2 nationality; population `all` only.
@@ -435,7 +463,7 @@ Parameters:
 
 ### GET /v1/stats/record-book
 The Record Book
-Every leaderboard's top rows for ONE promotion in one call — org is required — grouped by category (fights, time, striking, grappling, records): data is [{ category, boards: [{ metric, rows }] }], rows exactly as on /v1/stats/leaders.
+Every leaderboard's top rows for ONE promotion in one call — org is required — grouped by category (fights, time, striking, grappling, discipline, records; discipline is included on Pro plans and above and simply absent below, with meta.plan_note): data is [{ category, boards: [{ metric, rows }] }], rows exactly as on /v1/stats/leaders.
 
 Parameters:
   - `org` (query, required) — one of `ufc`, `pfl`, `oktagon`, `bkfc`, `rizin`

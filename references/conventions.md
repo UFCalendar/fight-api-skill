@@ -39,6 +39,10 @@ cursor, and never page past what you need.
 
 - Webhook endpoints and odds
   history (`GET /v1/fights/{id}/odds/history`) need **Pro or above**.
+- So do the in-fight log and position stats (`GET /v1/fights/{id}/timeline`,
+  `GET /v1/fights/{id}/positions`, `GET /v1/fighters/{idOrSlug}/discipline`,
+  `GET /v1/fighters/{idOrSlug}/positions`) and the discipline leaderboards.
+  They cover settled UFC bouts only.
 - Everything else, ICS feeds included, is open to any active plan.
 - A key below the required tier gets `403 tier_required`.
 
