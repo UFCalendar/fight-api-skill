@@ -159,14 +159,14 @@ Parameters:
 
 ### GET /v1/events/{idOrSlug}/odds
 Consensus odds for one card
-The UFCalendar consensus line for every non-cancelled bout on one card, in card order: fights[], each with fight_id, status, both corners (fighter_a, fighter_b: id, slug, name), consensus (the latest point; the closing line once the bout is settled), opening (the first point we recorded), closing (settled bouts only: the last point at or before the event start), movement (opening → consensus in implied-probability points on corner a, with the direction the market moved), points and updated_at.
+The UFCalendar consensus line for every non-cancelled bout on one card, in card order: fights[], each with fight_id, status, both corners (fighter_a, fighter_b: id, slug, name), consensus (the latest point; the closing line once the bout is settled), opening (the first point we recorded; on a settled bout from the archive that stores only its closing point, the mean of each sportsbook's own opening price with recorded_at: null), closing (settled bouts only: the last point at or before the start of the bout's own card section, or the event start when that time is not known), movement (opening → consensus in implied-probability points on corner a, with the direction the market moved), points and updated_at.
 
 Parameters:
   - `idOrSlug` (path, required) — Numeric id or slug of the event. Stale slugs 308-redirect to the canonical URL.
 
 ### GET /v1/fights/{id}/odds
 Consensus odds for one bout
-The UFCalendar consensus line for one bout: consensus (the latest point; the closing line once the bout is settled), opening (the first point we recorded), closing (settled bouts only, completed or no_contest: the last point at or before the event start; null until then), movement (opening → consensus: delta_points_a in implied-probability points on corner a, direction = the corner the market moved toward, since), points (stored points) and updated_at (when the line last moved).
+The UFCalendar consensus line for one bout: consensus (the latest point; the closing line once the bout is settled), opening (the first point we recorded; on a settled bout from the archive that stores only its closing point, the mean of each sportsbook's own opening price with recorded_at: null), closing (settled bouts only, completed or no_contest: the last point at or before the start of the bout's own card section (main card, prelims or early prelims), or the event start when that time is not known; null until then), movement (opening → consensus: delta_points_a in implied-probability points on corner a, direction = the corner the market moved toward, since), points (stored points) and updated_at (when the line last moved).
 
 Parameters:
   - `id` (path, required)
