@@ -47,7 +47,8 @@ credential at all, so an agent can evaluate the API before anyone signs in.
 
 Odds are the UFCalendar consensus line only (no book identities; information
 only, not betting advice). Fighter images are Creative Commons and
-must be shown with their credit. Not affiliated with UFC, Zuffa, TKO or any
-promotion.
+must be shown with their credit. Not affiliated with, endorsed by or licensed by
+UFC, Zuffa, TKO or any promotion. Data is compiled from publicly accessible
+sources and is not an official or rights-cleared feed.
 
 MIT licensed.

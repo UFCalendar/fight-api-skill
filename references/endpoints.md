@@ -31,7 +31,7 @@ One weight class in one promotion, in one call: division (slug, canonical name, 
 
 Parameters:
   - `slug` (path, required) — one of `ufc`, `pfl`, `oktagon`, `bkfc`, `rizin`
-  - `division` (path, required) — one of `strawweight`, `flyweight`, `bantamweight`, `featherweight`, `lightweight`, `welterweight`, `super-welterweight`, `middleweight`, `light-heavyweight`, `heavyweight`, `super-heavyweight`, `womens-strawweight`, `womens-flyweight`, `womens-bantamweight`, `womens-featherweight`, `atomweight`, `ironweight`
+  - `division` (path, required) — one of `strawweight`, `flyweight`, `bantamweight`, `featherweight`, `lightweight`, `welterweight`, `super-welterweight`, `middleweight`, `light-heavyweight`, `cruiserweight`, `heavyweight`, `super-heavyweight`, `womens-strawweight`, `womens-flyweight`, `womens-bantamweight`, `womens-featherweight`, `atomweight`, `ironweight`
 
 ### GET /v1/coverage
 Data coverage per promotion
@@ -456,7 +456,7 @@ One board from UFCalendar's Record Book rollup (rebuilt daily) for ONE promotion
 Parameters:
   - `org` (query, required) — one of `ufc`, `pfl`, `oktagon`, `bkfc`, `rizin`
   - `metric` (query, required) — one of `total_fights`, `wins`, `decision_wins`, `title_fight_wins`, `bonuses`, `finishes`, `win_streak`, `total_fight_seconds`, `avg_fight_seconds_short`, `avg_fight_seconds_long`, `control_time_sec`, `control_time_pct`, `sig_strikes_landed`, `total_strikes_landed`, `slpm`, `sapm`, `striking_differential`, `sig_strike_accuracy`, `sig_strike_defense`, `knockdowns`, `knockdowns_per_15`, `knockouts`, `takedowns_landed`, `td_avg`, `takedown_accuracy`, `takedown_defense`, `submission_attempts`, `sub_avg_per_15`, `submissions`, `fastest_finish`, `fastest_knockout`, `fastest_submission`, `longest_fight_seconds`, `most_sig_strikes_fight`, `most_takedowns_fight`, `most_knockdowns_fight`, `longest_control_fight`, `most_sig_strikes_round`, `most_takedowns_round`, `most_knockdowns_round`, `fouls_committed`, `eye_pokes_committed`, `low_blows_committed`, `fouls_drawn`, `fouls_per_15`, `most_fouls_fight`, `longest_foul_stoppage_fight`, `most_fouls_event`, `most_finishes_event`, `most_knockouts_event`, `shortest_card_seconds`, `finish_rate`, `ko_rate`, `sub_rate`, `decision_rate`, `avg_fight_seconds`, `fouls_per_15_division`
-  - `division` (query) — one of `strawweight`, `flyweight`, `bantamweight`, `featherweight`, `lightweight`, `welterweight`, `super-welterweight`, `middleweight`, `light-heavyweight`, `heavyweight`, `super-heavyweight`, `womens-strawweight`, `womens-flyweight`, `womens-bantamweight`, `womens-featherweight`, `atomweight`, `ironweight`
+  - `division` (query) — one of `strawweight`, `flyweight`, `bantamweight`, `featherweight`, `lightweight`, `welterweight`, `super-welterweight`, `middleweight`, `light-heavyweight`, `cruiserweight`, `heavyweight`, `super-heavyweight`, `womens-strawweight`, `womens-flyweight`, `womens-bantamweight`, `womens-featherweight`, `atomweight`, `ironweight`
   - `population` (query) — one of `all`, `active`
   - `country` (query) — ISO-3166 alpha-2 nationality; population `all` only.
   - `limit` (query)
@@ -467,7 +467,7 @@ Every leaderboard's top rows for ONE promotion in one call — org is required �
 
 Parameters:
   - `org` (query, required) — one of `ufc`, `pfl`, `oktagon`, `bkfc`, `rizin`
-  - `division` (query) — one of `strawweight`, `flyweight`, `bantamweight`, `featherweight`, `lightweight`, `welterweight`, `super-welterweight`, `middleweight`, `light-heavyweight`, `heavyweight`, `super-heavyweight`, `womens-strawweight`, `womens-flyweight`, `womens-bantamweight`, `womens-featherweight`, `atomweight`, `ironweight`
+  - `division` (query) — one of `strawweight`, `flyweight`, `bantamweight`, `featherweight`, `lightweight`, `welterweight`, `super-welterweight`, `middleweight`, `light-heavyweight`, `cruiserweight`, `heavyweight`, `super-heavyweight`, `womens-strawweight`, `womens-flyweight`, `womens-bantamweight`, `womens-featherweight`, `atomweight`, `ironweight`
   - `population` (query) — one of `all`, `active`
   - `country` (query) — ISO-3166 alpha-2 nationality; population `all` only.
   - `scope` (query) — one of `career`, `single_fight`, `round`, `division`, `event`

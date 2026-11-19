@@ -160,8 +160,9 @@ Full list with every parameter: `references/endpoints.md`.
   stoppage is unlabelled, never "no foul". Report the foul, its basis and the
   stoppage; do not call a fighter dirty on it. In position stats `null` means
   not tracked for that bout and `0` is a real zero.
-- **Not affiliated** with UFC, Zuffa, TKO or any promotion. Say so if it could
-  be misread.
+- **Not affiliated** with, endorsed by or licensed by UFC, Zuffa, TKO or any
+  promotion. The data is compiled from publicly accessible sources and is not an
+  official or rights-cleared feed. Say so if it could be misread.
 
 ## 5. MCP vs REST vs SDK
 

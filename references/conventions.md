@@ -89,4 +89,4 @@ That split is deliberate, so plan one detail call per entity you actually need.
 - **Fighter images are Wikimedia Commons / Creative Commons only** and carry
   `license`, `license_url` and `artist`. Displaying that credit is a licence
   requirement.
-- Not affiliated with UFC, Zuffa, TKO or any promotion.
+- Not affiliated with, endorsed by or licensed by UFC, Zuffa, TKO or any promotion. Data is compiled from publicly accessible sources and is not an official or rights-cleared feed.
