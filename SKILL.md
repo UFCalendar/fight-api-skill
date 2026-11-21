@@ -116,6 +116,8 @@ headers, tier gates and webhook signature verification are all there.
 | What happened inside the fight: takedowns, knockdowns, referee stoppages, fouls? | `GET /v1/fights/{id}/timeline` — the official in-fight log of a settled UFC bout, with every confirmed foul (Pro and up) |
 | Where was the fight fought, and who held control? | `GET /v1/fights/{id}/positions` — time at distance / clinch / ground, control by position, per round (Pro and up) |
 | How often does this fighter commit fouls? Where do their fights happen? | `GET /v1/fighters/{id\|slug}/discipline` and `…/positions` (Pro and up) |
+| Is this fighter still on the UFC roster? | `roster` on `GET /v1/fighters/{id\|slug}` (`active`, `off_roster` = no longer listed, `retired`; as published by the promotion, every plan); `GET /v1/fighters?org=ufc&roster_status=active` lists them |
+| Who signed with, left or retired from the UFC? | `GET /v1/rosters/ufc/moves` — confirmed roster moves, dated by the window they happened in (Pro and up) |
 | Who is this fighter? | `GET /v1/fighters/{id\|slug}` and `…/history` |
 | Who was ranked #1 in 2016? | `GET /v1/rankings/ufc?date=2016-11-14` (rank 0 = champion) |
 | Where can I watch it in Germany? | `GET /v1/broadcast-rights/ufc?country=DE` |
@@ -168,7 +170,7 @@ Full list with every parameter: `references/endpoints.md`.
 
 - **MCP** (`https://api.ufcalendar.com/mcp`) — you are answering a question
   right now, inside an agent, and want tool calls instead of an HTTP client.
-  56 tools; `get_plans`, `list_orgs` and `how_to_connect` need no credential
+  58 tools; `get_plans`, `list_orgs` and `how_to_connect` need no credential
   and cost nothing. 1 tool call = 1 metered request. Setup per client:
   `references/mcp-clients.md`.
 - **REST** — you are writing code in a language with no SDK, or you want the
@@ -193,6 +195,7 @@ Full list with every parameter: `references/endpoints.md`.
 | What happened inside the fight? Any fouls, point deductions or a disqualification? | `get_fight_timeline` (Pro and up) |
 | Where was it fought — distance, clinch or ground — and who had control? | `get_fight_positions` / `get_fighter_positions` (Pro and up) |
 | How often does X foul, or get fouled? | `get_fighter_discipline` (Pro and up) |
+| Who is on the UFC roster? Who just left it? | `search_fighters` with `org: "ufc", roster_status` (every plan); `get_roster`, `get_roster_moves` (Pro and up) |
 | Has UFCalendar written about it? | `search_articles` |
 
 Rule of thumb: **answering** → MCP. **Building** → SDK, or REST if neither SDK

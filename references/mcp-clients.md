@@ -51,7 +51,7 @@ sign in. Every read tool is annotated read-only and closed-world.
 
 ## Tools
 
-56 tools. Three are free and need no credential (`get_plans`, `list_orgs`,
+58 tools. Three are free and need no credential (`get_plans`, `list_orgs`,
 `how_to_connect`); the rest map onto the REST API (see `endpoints.md` for
 what each returns). The four webhook tools, `get_odds_history` and the four
 fight-log and position tools (`get_fight_timeline`, `get_fight_positions`,

@@ -66,7 +66,12 @@ That split is deliberate, so plan one detail call per entity you actually need.
   `event.completed`, `odds.moved` (the UFCalendar consensus line on an upcoming
   bout moved 5+ implied-probability points on corner a, or the favourite
   flipped — measured against the last line delivered, so a slow drift arrives
-  once; information only, not betting advice).
+  once; information only, not betting advice), `roster.changed` (a confirmed
+  UFC roster move — signed, left the roster, retired, returned — as published
+  by the promotion; `data` is the `/v1/rosters/{org}/moves` row).
+- Roster status is the promotion's own published record: `off_roster` means it
+  no longer lists the fighter on its roster and says nothing about why. Never
+  describe it as "released" or "cut".
 
 ## Hard rules about the data
 

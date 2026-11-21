@@ -323,6 +323,7 @@ Parameters:
   - `q` (query)
   - `org` (query) — one of `ufc`, `pfl`, `oktagon`, `bkfc`, `rizin`
   - `country` (query) — ISO-2 code (`US`, `GE`) or country name; matches either nationality.
+  - `roster_status` (query) — one of `active`, `off_roster`, `retired`
   - `cursor` (query) — Opaque cursor from `meta.pagination.next_cursor`.
   - `limit` (query)
 
@@ -426,6 +427,32 @@ Parameters:
   - `view` (query) — one of `current`, `movers`, `peaks`
   - `division` (query) — Division slug, e.g. `lightweight`, `light-heavyweight`, `womens-strawweight`.
   - `days` (query) — Window for `view=movers`, default 365; days is snapped to 30/90/180/365/730/1825/3650 (the nearest one), and `meta.days` reports the window actually used.
+  - `limit` (query)
+
+## Rosters
+
+### GET /v1/rosters/{org}
+A promotion's current roster (Pro+)
+The roster as published by the promotion on its own athlete profiles, for the promotions that publish one (today the UFC; capabilities.roster on /v1/orgs).
+
+Parameters:
+  - `org` (path, required) — one of `ufc`
+  - `status` (query) — one of `active`, `off_roster`, `retired`
+  - `division` (query) — Division slug, e.g. `featherweight`, `light-heavyweight`, `womens-strawweight`.
+  - `cursor` (query) — Opaque cursor from `meta.pagination.next_cursor`.
+  - `limit` (query)
+
+### GET /v1/rosters/{org}/moves
+Roster moves: signings, departures, retirements (Pro+)
+Confirmed roster moves as published by the promotion, newest first: signed (newly listed as active), left (no longer listed on the roster — the promotion does not say why), retired and returned (listed as active again).
+
+Parameters:
+  - `org` (path, required) — one of `ufc`
+  - `since` (query) — `YYYY-MM-DD` (UTC) or ISO-8601 datetime: moves observed on or after it.
+  - `until` (query) — `YYYY-MM-DD` (UTC, the whole day) or ISO-8601 datetime: moves observed on or before it.
+  - `kind` (query) — one of `signed`, `left`, `retired`, `returned`
+  - `fighter` (query) — Only this fighter's moves: slug (preferred) or numeric id. 404 when the fighter does not exist; an empty list when he has no roster moves.
+  - `cursor` (query) — Opaque cursor from `meta.pagination.next_cursor`.
   - `limit` (query)
 
 ## Matchmaker
