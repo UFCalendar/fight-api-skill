@@ -15,7 +15,7 @@ description: >-
 
 # UFCalendar Fight API
 
-A REST + MCP API for **UFC, PFL, OKTAGON, BKFC and RIZIN**: events, full fight
+A REST + MCP API for **UFC, PFL, OKTAGON, BKFC, RIZIN and KSW**: events, full fight
 cards, results within minutes, per-fight and round-by-round statistics, fighter
 careers across promotions, the judges' scorecards (the official commission
 record), UFC rankings point-in-time since 2013, model win probabilities, the

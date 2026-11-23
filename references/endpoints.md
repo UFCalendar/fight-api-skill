@@ -30,7 +30,7 @@ One division in one promotion
 One weight class in one promotion, in one call: division (slug, canonical name, weight_limit_lbs — null where no standard limit applies), rankings (the promotion's current official board for this division — same object as /v1/rankings/{org}?division= — or null when it publishes none), upcoming (up to 50 bouts booked at this weight, soonest first), recent (the 15 latest completed or no-contest bouts, newest first) and roster (up to 30 fighters who have fought at this weight, most recent first, each with last_fought_at).
 
 Parameters:
-  - `slug` (path, required) — one of `ufc`, `pfl`, `oktagon`, `bkfc`, `rizin`
+  - `slug` (path, required) — one of `ufc`, `pfl`, `oktagon`, `bkfc`, `rizin`, `ksw`
   - `division` (path, required) — one of `strawweight`, `flyweight`, `bantamweight`, `featherweight`, `lightweight`, `welterweight`, `super-welterweight`, `middleweight`, `light-heavyweight`, `cruiserweight`, `heavyweight`, `super-heavyweight`, `womens-strawweight`, `womens-flyweight`, `womens-bantamweight`, `womens-featherweight`, `atomweight`, `ironweight`
 
 ### GET /v1/coverage
@@ -38,7 +38,7 @@ Data coverage per promotion
 What the database actually holds, computed from it (refreshed every 30 minutes) rather than quoted from a marketing page: per launch promotion and per UTC year, the non-cancelled events that have started, the settled bouts (fights_completed: completed or no contest) and how many of them carry per-fight totals (fights_with_stats), round-by-round lines (fights_with_rounds), at least one official commission scorecard (fights_with_scorecards — a finish has no cards, so this tops out at the decision share) and a consensus odds line across the sportsbooks we track (fights_with_odds; information only, not betting advice), each with its 0–1 *_rate.
 
 Parameters:
-  - `org` (query) — one of `ufc`, `pfl`, `oktagon`, `bkfc`, `rizin`
+  - `org` (query) — one of `ufc`, `pfl`, `oktagon`, `bkfc`, `rizin`, `ksw`
 
 ## Events
 
@@ -47,7 +47,7 @@ List events (schedule + results)
 A bare listing is the upcoming calendar: events from the last ~6h onward, soonest first.
 
 Parameters:
-  - `org` (query) — one of `ufc`, `pfl`, `oktagon`, `bkfc`, `rizin`
+  - `org` (query) — one of `ufc`, `pfl`, `oktagon`, `bkfc`, `rizin`, `ksw`
   - `status` (query) — Filter on lifecycle status; `postponed` is accepted (2026-09-24). `upcoming` = everything not yet over (announced, scheduled or live), soonest first. `scheduled` = not started yet (`announced` or `scheduled`; upcoming cards are almost always stored as `announced`).
   - `from` (query) — First UTC calendar day, inclusive `YYYY-MM-DD`, matched against the event's `starts_at` (first bell, UTC) — not the venue's local date. Must be a real calendar day.
   - `to` (query) — Last UTC calendar day, inclusive `YYYY-MM-DD`, matched against `starts_at` (UTC). An evening card in the Americas starts after midnight UTC, so it falls on the next UTC day: a Saturday-night Las Vegas card needs `to=` the Sunday. Must be a real calendar day.
@@ -92,7 +92,7 @@ Card-change feed across events
 Every card change across the launch promotions (or one of them), newest first — the same audit trail the card.changed webhook delivers, for callers that poll instead.
 
 Parameters:
-  - `org` (query) — one of `ufc`, `pfl`, `oktagon`, `bkfc`, `rizin`
+  - `org` (query) — one of `ufc`, `pfl`, `oktagon`, `bkfc`, `rizin`, `ksw`
   - `since` (query) — Only changes observed at or after this point: `YYYY-MM-DD` (UTC midnight) or an ISO-8601 datetime. Default: 90 days ago.
   - `kind` (query) — one of `fight-added`, `fight-cancelled`, `fight-reinstated`, `opponent-changed`, `time-changed`, `venue-changed`, `fighter-merged`
   - `cursor` (query) — Opaque cursor from `meta.pagination.next_cursor`.
@@ -133,7 +133,7 @@ ICS calendar feed
 Subscribe your calendar app to an org's schedule.
 
 Parameters:
-  - `org` (path, required) — `ufc`, `pfl`, `oktagon`, `bkfc` or `rizin`; append `-sections` or `-fights` for the per-section or per-bout shape (e.g. `ufc-fights.ics`)
+  - `org` (path, required) — `ufc`, `pfl`, `oktagon`, `bkfc`, `rizin` or `ksw`; append `-sections` or `-fights` for the per-section or per-bout shape (e.g. `ufc-fights.ics`)
   - `key` (query, required)
 
 ## Broadcast
@@ -189,7 +189,7 @@ Search completed bouts (filtered)
 Completed bouts with a winner across the launch promotions, filtered — the one-call answer to "the last title fight to end by knockout" or "every submission win for this fighter".
 
 Parameters:
-  - `org` (query) — one of `ufc`, `pfl`, `oktagon`, `bkfc`, `rizin`
+  - `org` (query) — one of `ufc`, `pfl`, `oktagon`, `bkfc`, `rizin`, `ksw`
   - `title_only` (query) — `true` = title bouts only.
   - `method` (query) — one of `ko`, `sub`, `dec`, `finish`, `any`
   - `division` (query) — Division slug (`lightweight`, `womens-strawweight`, …) for an exact match, or a name fragment (≤40 characters) matched anywhere in the weight class.
@@ -252,7 +252,7 @@ Split and majority decisions
 Completed bouts the judges decided on a split or majority (including majority and split draws), newest first, across the launch promotions or one of them, optionally in a date range.
 
 Parameters:
-  - `org` (query) — one of `ufc`, `pfl`, `oktagon`, `bkfc`, `rizin`
+  - `org` (query) — one of `ufc`, `pfl`, `oktagon`, `bkfc`, `rizin`, `ksw`
   - `from` (query) — First UTC calendar day, inclusive `YYYY-MM-DD`, matched against the event's `starts_at` (first bell, UTC) — not the venue's local date. Must be a real calendar day.
   - `to` (query) — Last UTC calendar day, inclusive `YYYY-MM-DD`, matched against `starts_at` (UTC). An evening card in the Americas starts after midnight UTC, so it falls on the next UTC day: a Saturday-night Las Vegas card needs `to=` the Sunday. Must be a real calendar day.
   - `cursor` (query) — Opaque cursor from `meta.pagination.next_cursor`.
@@ -264,7 +264,7 @@ Every official who has scored a launch-org bout (~550), busiest first, with thei
 
 Parameters:
   - `q` (query) — Name substring, case-insensitive.
-  - `org` (query) — one of `ufc`, `pfl`, `oktagon`, `bkfc`, `rizin`
+  - `org` (query) — one of `ufc`, `pfl`, `oktagon`, `bkfc`, `rizin`, `ksw`
   - `min_fights` (query) — Only judges with at least this many scored fights.
   - `cursor` (query) — Opaque cursor from `meta.pagination.next_cursor`.
   - `limit` (query)
@@ -293,7 +293,7 @@ Every referee who has worked a settled launch-promotion bout, busiest first, wit
 
 Parameters:
   - `q` (query) — Name fragment, accent- and spacing-insensitive.
-  - `org` (query) — one of `ufc`, `pfl`, `oktagon`, `bkfc`, `rizin`
+  - `org` (query) — one of `ufc`, `pfl`, `oktagon`, `bkfc`, `rizin`, `ksw`
   - `cursor` (query) — Opaque cursor from `meta.pagination.next_cursor`.
   - `limit` (query)
 
@@ -321,7 +321,7 @@ Fighters with at least one launch-org fight (~4.5k).
 
 Parameters:
   - `q` (query)
-  - `org` (query) — one of `ufc`, `pfl`, `oktagon`, `bkfc`, `rizin`
+  - `org` (query) — one of `ufc`, `pfl`, `oktagon`, `bkfc`, `rizin`, `ksw`
   - `country` (query) — ISO-2 code (`US`, `GE`) or country name; matches either nationality.
   - `roster_status` (query) — one of `active`, `off_roster`, `retired`
   - `cursor` (query) — Opaque cursor from `meta.pagination.next_cursor`.
@@ -413,7 +413,7 @@ Current champions
 Rank-0 rows of each launch org's latest official board, with the champion's nationality and country_code (ISO-3166 alpha-2).
 
 Parameters:
-  - `org` (query) — one of `ufc`, `pfl`, `oktagon`, `bkfc`, `rizin`
+  - `org` (query) — one of `ufc`, `pfl`, `oktagon`, `bkfc`, `rizin`, `ksw`
   - `division` (query) — Division slug as the boards carry it (`lightweight`, `womens-strawweight`, BKFC `cruiserweight`, …) or its display form. A division with a vacant title returns an empty list; one no board in scope carries 400s `invalid_division` listing the available ones.
 
 ## Power Index
@@ -423,7 +423,7 @@ Power Index board
 The UFCalendar Power Index (our own rating engine, hourly refresh) for one org, in three views: - current (default): top-rated fighters whose latest bout was in this org.
 
 Parameters:
-  - `org` (path, required) — one of `ufc`, `pfl`, `oktagon`, `bkfc`, `rizin`
+  - `org` (path, required) — one of `ufc`, `pfl`, `oktagon`, `bkfc`, `rizin`, `ksw`
   - `view` (query) — one of `current`, `movers`, `peaks`
   - `division` (query) — Division slug, e.g. `lightweight`, `light-heavyweight`, `womens-strawweight`.
   - `days` (query) — Window for `view=movers`, default 365; days is snapped to 30/90/180/365/730/1825/3650 (the nearest one), and `meta.days` reports the window actually used.
@@ -459,10 +459,10 @@ Parameters:
 
 ### GET /v1/matchmaker/{org}
 Matchmaker board
-UFCalendar's matchmaker for one MMA promotion (ufc, pfl, oktagon, rizin; bkfc 400s unsupported_org — the engine runs on the Power Index, which rates MMA only).
+UFCalendar's matchmaker for one MMA promotion (ufc, pfl, oktagon, rizin, ksw; bkfc 400s unsupported_org — the engine runs on the Power Index, which rates MMA only).
 
 Parameters:
-  - `org` (path, required) — one of `ufc`, `pfl`, `oktagon`, `rizin`
+  - `org` (path, required) — one of `ufc`, `pfl`, `oktagon`, `rizin`, `ksw`
   - `division` (query) — One division slug from `meta.divisions`, e.g. `lightweight`, `womens-strawweight`. Omit for the cross-division board.
   - `limit` (query)
 
@@ -481,7 +481,7 @@ One stat leaderboard
 One board from UFCalendar's Record Book rollup (rebuilt daily) for ONE promotion — org is required; there is no cross-promotion board on the API.
 
 Parameters:
-  - `org` (query, required) — one of `ufc`, `pfl`, `oktagon`, `bkfc`, `rizin`
+  - `org` (query, required) — one of `ufc`, `pfl`, `oktagon`, `bkfc`, `rizin`, `ksw`
   - `metric` (query, required) — one of `total_fights`, `wins`, `decision_wins`, `title_fight_wins`, `bonuses`, `finishes`, `win_streak`, `total_fight_seconds`, `avg_fight_seconds_short`, `avg_fight_seconds_long`, `control_time_sec`, `control_time_pct`, `sig_strikes_landed`, `total_strikes_landed`, `slpm`, `sapm`, `striking_differential`, `sig_strike_accuracy`, `sig_strike_defense`, `knockdowns`, `knockdowns_per_15`, `knockouts`, `takedowns_landed`, `td_avg`, `takedown_accuracy`, `takedown_defense`, `submission_attempts`, `sub_avg_per_15`, `submissions`, `fastest_finish`, `fastest_knockout`, `fastest_submission`, `longest_fight_seconds`, `most_sig_strikes_fight`, `most_takedowns_fight`, `most_knockdowns_fight`, `longest_control_fight`, `most_sig_strikes_round`, `most_takedowns_round`, `most_knockdowns_round`, `fouls_committed`, `eye_pokes_committed`, `low_blows_committed`, `fouls_drawn`, `fouls_per_15`, `most_fouls_fight`, `longest_foul_stoppage_fight`, `most_fouls_event`, `most_finishes_event`, `most_knockouts_event`, `shortest_card_seconds`, `finish_rate`, `ko_rate`, `sub_rate`, `decision_rate`, `avg_fight_seconds`, `fouls_per_15_division`
   - `division` (query) — one of `strawweight`, `flyweight`, `bantamweight`, `featherweight`, `lightweight`, `welterweight`, `super-welterweight`, `middleweight`, `light-heavyweight`, `cruiserweight`, `heavyweight`, `super-heavyweight`, `womens-strawweight`, `womens-flyweight`, `womens-bantamweight`, `womens-featherweight`, `atomweight`, `ironweight`
   - `population` (query) — one of `all`, `active`
@@ -493,7 +493,7 @@ The Record Book
 Every leaderboard's top rows for ONE promotion in one call — org is required — grouped by category (fights, time, striking, grappling, discipline, records; discipline is included on Pro plans and above and simply absent below, with meta.plan_note): data is [{ category, boards: [{ metric, rows }] }], rows exactly as on /v1/stats/leaders.
 
 Parameters:
-  - `org` (query, required) — one of `ufc`, `pfl`, `oktagon`, `bkfc`, `rizin`
+  - `org` (query, required) — one of `ufc`, `pfl`, `oktagon`, `bkfc`, `rizin`, `ksw`
   - `division` (query) — one of `strawweight`, `flyweight`, `bantamweight`, `featherweight`, `lightweight`, `welterweight`, `super-welterweight`, `middleweight`, `light-heavyweight`, `cruiserweight`, `heavyweight`, `super-heavyweight`, `womens-strawweight`, `womens-flyweight`, `womens-bantamweight`, `womens-featherweight`, `atomweight`, `ironweight`
   - `population` (query) — one of `all`, `active`
   - `country` (query) — ISO-3166 alpha-2 nationality; population `all` only.
@@ -506,7 +506,7 @@ One calendar year (UTC) of one promotion — or, without org, of every covered p
 
 Parameters:
   - `year` (path, required) — Calendar year, 1993 to the current year.
-  - `org` (query) — one of `ufc`, `pfl`, `oktagon`, `bkfc`, `rizin`
+  - `org` (query) — one of `ufc`, `pfl`, `oktagon`, `bkfc`, `rizin`, `ksw`
 
 ## Predictions
 
