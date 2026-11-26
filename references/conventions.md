@@ -37,8 +37,11 @@ cursor, and never page past what you need.
 
 ## Tier gates
 
-- Webhook endpoints and odds
-  history (`GET /v1/fights/{id}/odds/history`) need **Pro or above**.
+- Webhook endpoints, odds history (`GET /v1/fights/{id}/odds/history`) and
+  the live fight-night feed (`GET /v1/events/{idOrSlug}/live` and the
+  WebSocket `wss://live.ufcalendar.com/v1?key=<key>`) need **Pro or above**.
+  A Pro key holds 2 live sockets at once, a Business key 5. In-fight numbers
+  on the live feed are unofficial until the bout is settled.
 - So do the in-fight log and position stats (`GET /v1/fights/{id}/timeline`,
   `GET /v1/fights/{id}/positions`, `GET /v1/fighters/{idOrSlug}/discipline`,
   `GET /v1/fighters/{idOrSlug}/positions`) and the discipline leaderboards.

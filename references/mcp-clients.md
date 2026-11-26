@@ -51,10 +51,12 @@ sign in. Every read tool is annotated read-only and closed-world.
 
 ## Tools
 
-58 tools. Three are free and need no credential (`get_plans`, `list_orgs`,
+59 tools. Three are free and need no credential (`get_plans`, `list_orgs`,
 `how_to_connect`); the rest map onto the REST API (see `endpoints.md` for
-what each returns). The four webhook tools, `get_odds_history` and the four
+what each returns). The four webhook tools, `get_event_live` (the live
+fight-night document of a UFC card), `get_odds_history` and the four
 fight-log and position tools (`get_fight_timeline`, `get_fight_positions`,
-`get_fighter_discipline`, `get_fighter_positions`) need Pro or above. Three of the webhook tools write (`create_webhook_endpoint`, `rotate_webhook_secret`,
+`get_fighter_discipline`, `get_fighter_positions`) and the two roster tools
+(`get_roster`, `get_roster_moves`) need Pro or above. Three of the webhook tools write (`create_webhook_endpoint`, `rotate_webhook_secret`,
 `delete_webhook_endpoint`) and are annotated accordingly — rotate and delete as
 destructive; ask before calling them. `list_webhook_endpoints` is read-only.

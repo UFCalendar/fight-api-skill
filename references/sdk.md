@@ -18,7 +18,7 @@ pip install ufcalendar
 ```python
 from ufcalendar import FightAPI
 
-api = FightAPI("ufcalendar_...")          # or export UFCAL_API_KEY=...
+api = FightAPI("ufcalendar_...")          # or export UFCALENDAR_API_KEY=...
 
 for ev in api.events(org="ufc", limit=5):        # upcoming, soonest first
     print(ev["starts_at"], ev["title"])
@@ -35,6 +35,11 @@ plans = api.plans()                               # works without a key
 
 Errors raise `FightAPIError` (`.status`, `.code`, `.message`, `.request_id`).
 After every call `api.last_rate_limit` holds the `X-RateLimit-*` headers.
+
+Live fight night (Pro and Business, 0.12.0+): `api.event_live("ufc-331")` returns
+the live document of a UFC card (`None` when not live), and
+`api.live_stream("ufc-331")` (`pip install 'ufcalendar[live]'`) yields every
+frame off `wss://live.ufcalendar.com/v1`. In-fight numbers are unofficial.
 
 <https://pypi.org/project/ufcalendar/> · <https://github.com/UFCalendar/ufcalendar-python>
 
@@ -67,6 +72,13 @@ List methods are async generators; everything else returns the envelope's
 `data`. Errors throw `FightAPIError` (`.status`, `.code`, `.message`,
 `.requestId`); `api.lastMeta` and `api.lastRateLimit` hold the last response's
 metadata. ESM + CJS, Node 18+, no runtime dependencies.
+
+Live fight night (Pro and Business, 0.12.0+): `await api.eventLive('ufc-331')`
+returns the live document of a UFC card (`null` when not live), and
+`api.subscribeLive('ufc-331', onFrame, { until: 'final' })` calls `onFrame` with
+every frame off `wss://live.ufcalendar.com/v1` and returns an unsubscribe
+function (global `WebSocket` on Node 22+ and browsers; inject `ws` on older
+Node). In-fight numbers are unofficial.
 
 <https://www.npmjs.com/package/@ufcalendar/sdk> · <https://github.com/UFCalendar/ufcalendar-typescript>
 

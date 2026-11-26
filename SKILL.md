@@ -6,8 +6,9 @@ description: >-
   Data MCP server. Covers "when is the next UFC event", fight schedule and full
   fight cards, fight results JSON, per-round stats, judges scorecards, UFC
   rankings history since 2013, fighter careers and records, consensus odds
-  and line movement for UFC and other promotions, per-country broadcast rights, and signed
-  webhooks. Also use when asked to build an MMA app
+  and line movement for UFC and other promotions, per-country broadcast rights, signed
+  webhooks, and the live fight-night feed (a WebSocket with the round, clock and
+  unofficial in-fight stats of UFC cards). Also use when asked to build an MMA app
   or fight calendar, to pick a plan or get an API key, or to connect the
   UFCalendar MCP server (the MMA Fight Data MCP server, UFC data included) to
   Claude, ChatGPT, Cursor or Codex.
@@ -19,7 +20,8 @@ A REST + MCP API for **UFC, PFL, OKTAGON, BKFC, RIZIN and KSW**: events, full fi
 cards, results within minutes, per-fight and round-by-round statistics, fighter
 careers across promotions, the judges' scorecards (the official commission
 record), UFC rankings point-in-time since 2013, model win probabilities, the
-UFCalendar consensus odds line and per-country broadcast rights.
+UFCalendar consensus odds line, per-country broadcast rights and, on Pro and
+Business, a live fight-night WebSocket for UFC cards.
 
 Odds are **one anonymised UFCalendar consensus line per corner**: the mean
 across the sportsbooks we track, with `sources` = how many books backed each
@@ -122,8 +124,29 @@ headers, tier gates and webhook signature verification are all there.
 | Who was ranked #1 in 2016? | `GET /v1/rankings/ufc?date=2016-11-14` (rank 0 = champion) |
 | Where can I watch it in Germany? | `GET /v1/broadcast-rights/ufc?country=DE` |
 | Tell me when the card changes | `POST /v1/webhook-endpoints` (Pro and up) |
+| What is happening in the cage RIGHT NOW (round, clock, live stats)? | `GET /v1/events/{id\|slug}/live` (Pro and Business) — or the WebSocket below, which pushes every change |
 
 Full list with every parameter: `references/endpoints.md`.
+
+### Live fight night (Pro and Business)
+
+On a UFC fight night (Contender Series included) one live document per card
+holds the bout order and statuses, the bout in progress (phase, round, running
+clock, unofficial in-fight stats, per-round splits, a timestamped action
+timeline) and the last result. `GET /v1/events/{idOrSlug}/live` returns it once
+(`data: null` when the card is not live). To stream it instead of polling:
+
+1. Connect to `wss://live.ufcalendar.com/v1?key=<key>`.
+2. Send `{"action":"subscribe","event":"<slug or id>"}`.
+3. Read frames `{"type":"snapshot"|"update"|"fight.final"|"event.completed","data":<LiveState>}`;
+   `{"action":"ping"}` answers `{"type":"pong","ts":…}`, a refusal arrives as
+   `{"type":"error","code":…,"message":…}`.
+
+A Pro key holds 2 sockets at once, a Business key 5; below Pro the REST call
+answers `403 tier_required` and the socket upgrade is refused. The SDKs wrap it:
+`live_stream()` (Python, `pip install 'ufcalendar[live]'`) and `subscribeLive()`
+(TypeScript). In-fight numbers are **unofficial** — quote the settled result and
+totals from `GET /v1/fights/{id}` and `/stats` once the bout is final.
 
 ## 4. Don'ts
 
@@ -170,7 +193,7 @@ Full list with every parameter: `references/endpoints.md`.
 
 - **MCP** (`https://api.ufcalendar.com/mcp`) — you are answering a question
   right now, inside an agent, and want tool calls instead of an HTTP client.
-  58 tools; `get_plans`, `list_orgs` and `how_to_connect` need no credential
+  59 tools; `get_plans`, `list_orgs` and `how_to_connect` need no credential
   and cost nothing. 1 tool call = 1 metered request. Setup per client:
   `references/mcp-clients.md`.
 - **REST** — you are writing code in a language with no SDK, or you want the
@@ -192,6 +215,7 @@ Full list with every parameter: `references/endpoints.md`.
 | Who should X fight next? Best matchups in a division? | `whos_next` / `get_matchmaker` |
 | What are the odds on this bout / this card? | `get_fight_odds` / `get_event_odds` |
 | How did the line move? | `get_odds_history` (Pro and up) |
+| What is happening in the cage right now? | `get_event_live` (Pro and Business; the in-fight numbers are unofficial) |
 | What happened inside the fight? Any fouls, point deductions or a disqualification? | `get_fight_timeline` (Pro and up) |
 | Where was it fought — distance, clinch or ground — and who had control? | `get_fight_positions` / `get_fighter_positions` (Pro and up) |
 | How often does X foul, or get fouled? | `get_fighter_discipline` (Pro and up) |
